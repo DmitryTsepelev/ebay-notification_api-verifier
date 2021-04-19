@@ -1,0 +1,22 @@
+name: Standard
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  standard:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7
+        bundler-cache: true
+    - name: Install dependencies
+      run: bundle install --gemfile gemfiles/standard.gemfile
+    - name: Lint Ruby code with Standard
+      run: bundle exec --gemfile gemfiles/standard.gemfile standardrb
